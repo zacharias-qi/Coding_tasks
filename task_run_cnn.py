@@ -19,6 +19,10 @@ def main(_):
     global_init = tf.global_variables_initializer()
     local_init = tf.local_variables_initializer()
     with tf.Session() as sess:
+        
+        # Write the Net graph for Tensorboard
+        writer = tf.summary.FileWriter("logs/", sess.graph)
+
         sess.run(global_init)
         sess.run(local_init)
 
@@ -33,7 +37,6 @@ def main(_):
             # - Apply Gausian filter to image of Homer
             # - Save image
             # - Push snapshot and image to GIT
-            #...
 
             img_save_path = os.getcwd() + '/image_results/'
 
@@ -92,9 +95,10 @@ class CNN():
             # - Apply a 5x5 Gaussian filter to the input
             #...
 
-            # Transform image to the in nn.conv2d required format
-            img = tf.expand_dims(img, dim=0)
-            img = tf.cast(img, tf.float32)
+            # Transform image to the input format of conv2d
+            with tf.name_scope('Image'):
+                img = tf.expand_dims(img, dim=0)
+                img = tf.cast(img, tf.float32)
 
             # Define Gaussian Filter kernel with w_shape
             mask = [1,  4,  6,  4, 1,
@@ -104,9 +108,12 @@ class CNN():
                     1,  4,  6,  4, 1]
             kernel = [i/(273.0*3.0) for i in mask] * w_shape[2]
 
-            # Transform kernel to in nn.conv2d required format
-            w_conv1 = tf.Variable(tf.constant(kernel, shape=w_shape, dtype=tf.float32))
-            h_conv1 = tf.nn.conv2d(img, w_conv1, strides=s, padding=pad, name='h_conv1')
+            # Transform kernel to nn.conv2d required format
+            with tf.name_scope('Gaussian_Filter'):
+                w_conv1 = tf.Variable(tf.constant(kernel, shape=w_shape, dtype=tf.float32), name='w_conv1')
+
+            with tf.name_scope('Hidden_Conv_Layer'):
+                h_conv1 = tf.nn.conv2d(img, w_conv1, strides=s, padding=pad, name='h_conv1')
             # h_conv1 = b_conv1*h_conv1
 
         return h_conv1
