@@ -3,6 +3,7 @@
 # Results
 
 Results from tfRecod reading: with file name e.g. "img_1_org.jpg"
+
 Results after Gaussian Filter: with file name e.g. "img_1_blur.jpg"
 
 
