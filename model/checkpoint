@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/qizhao/BMW_tasks/Coding_Task/model/save_net.ckpt"
+all_model_checkpoint_paths: "/home/qizhao/BMW_tasks/Coding_Task/model/save_net.ckpt"
