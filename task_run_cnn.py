@@ -33,7 +33,7 @@ def main(_):
         for i in range(model.N_SAMPLES):
             x_val, y_val = sess.run([x, y])
 
-            #Task 3:
+            # Task 3:
             # - Apply Gausian filter to image of Homer
             # - Save image
             # - Push snapshot and image to GIT
