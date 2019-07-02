@@ -92,7 +92,7 @@ class CNN():
             # - Apply a 5x5 Gaussian filter to the input
             #...
 
-            # Transform image to the input format of conv2d
+            # Transform image to the in nn.conv2d required format
             img = tf.expand_dims(img, dim=0)
             img = tf.cast(img, tf.float32)
 
@@ -104,7 +104,7 @@ class CNN():
                     1,  4,  6,  4, 1]
             kernel = [i/(273.0*3.0) for i in mask] * w_shape[2]
 
-            # Transform
+            # Transform kernel to in nn.conv2d required format
             w_conv1 = tf.Variable(tf.constant(kernel, shape=w_shape, dtype=tf.float32))
             h_conv1 = tf.nn.conv2d(img, w_conv1, strides=s, padding=pad, name='h_conv1')
             # h_conv1 = b_conv1*h_conv1
